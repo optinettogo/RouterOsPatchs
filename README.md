@@ -18,41 +18,20 @@
 </p>
 
 ---
-</div>
 
-<table width="100%" border="0">
-  <tr>
-    <td width="55%" valign="top">
-      <h4>ℹ️ Informations Rapides</h4>
-      <blockquote>
-        Ressources optimisées pour le déploiement de <b>RouterOS</b> sur architectures <b>x86</b> et serveurs virtuels.
-        <br><br>
-        ✅ Fichiers renommés (Clean)<br>
-        ✅ Compression ZIP individuelle<br>
-        ✅ Prêt pour VMware, GNS3 & Proxmox
-      </blockquote>
-    </td>
-    <td width="45%" valign="top">
-      <h4>⚙️ Liens du Projet</h4>
-      <ul>
-        <li>📦 <b><a href="https://github.com/optinettogo/RouterOsPatchs/releases">Dernières Releases</a></b></li>
-        <li>📖 <b><a href="https://help.mikrotik.com/docs/">Documentation Officielle</a></b></li>
-        <li>💬 <b><a href="https://chat.whatsapp.com/TON_LIEN_WHATSAPP">Support WhatsApp</a></b></li>
-      </ul>
-    </td>
-  </tr>
-</table>
+<img src="https://raw.githubusercontent.com/optinettogo/RouterOsPatchs/main/milieux.png" width="850" alt="Informations et Liens">
 
 <br>
-
-<div align="center">
 
 ### 📂 **Tableau des Ressources v7 (Stable)**
 
 **Système / Image**
 
+<br>
+
 [![X86](https://img.shields.io/badge/X86--Packages-passing-ff69b4?style=flat-square&logo=git)](https://github.com/optinettogo/RouterOsPatchs/releases) &nbsp; [![VMware](https://img.shields.io/badge/VMware--(VMDK)-passing-blueviolet?style=flat-square&logo=vmware)](https://github.com/optinettogo/RouterOsPatchs/releases) &nbsp; [![GNS3](https://img.shields.io/badge/GNS3--(QCOW2)-passing-047AD0?style=flat-square&logo=gns3)](https://github.com/optinettogo/RouterOsPatchs/releases)
 
+<br>
 <br>
 
 ---
