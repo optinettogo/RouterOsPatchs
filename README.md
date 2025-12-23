@@ -23,11 +23,17 @@
 
 <br>
 
+<!-- AUTO-RELEASE-START -->
 ### 📂 **Tableau des Ressources (Stable)**
 
-**Version actuelle : v8.10**
+**Version actuelle : vX.Y.Z**
 
-[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/8.10/all_packages-x86-8.10.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/8.10/mikrotik-8.10.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/8.10/install-image-8.10-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/8.10/chr-8.10-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/8.10/chr-8.10-.qcow2.zip)
+[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/vX.Y.Z/all_packages-x86-vX.Y.Z.zip) &nbsp; 
+[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/vX.Y.Z/mikrotik-vX.Y.Z.iso.zip) &nbsp; 
+[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/vX.Y.Z/install-image-vX.Y.Z-.img.zip) &nbsp; 
+[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/vX.Y.Z/chr-vX.Y.Z-vmdk.zip) &nbsp; 
+[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/vX.Y.Z/chr-vX.Y.Z-.qcow2.zip)
+<!-- AUTO-RELEASE-END -->
 
 ---
 
