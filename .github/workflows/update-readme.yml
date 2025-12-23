@@ -12,21 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout EXPLICITE de la branche main (clé contre detached HEAD)
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
 
-      # 2️⃣ Récupération du tag de la release (ex: 7.20)
       - name: Get release version
         id: release
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      # 3️⃣ Génération du bloc AUTO-RELEASE
       - name: Update README download links
         run: |
           VERSION="${{ steps.release.outputs.version }}"
@@ -37,30 +34,29 @@ jobs:
           VMDK="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip"
           QCOW2="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION.qcow2.zip"
 
-          cat <<EOF > /tmp/auto_release_block.txt
-<!-- AUTO-RELEASE-START -->
-
-### 📂 **Tableau des Ressources v7 (Stable)**
-
-**Version actuelle : $VERSION**
-
-[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)]($X86)
-[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)]($ISO)
-[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)]($IMG)
-[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)]($VMDK)
-[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)
-
-<!-- AUTO-RELEASE-END -->
-EOF
+          printf '%s\n' \
+'<!-- AUTO-RELEASE-START -->' \
+'' \
+'### 📂 **Tableau des Ressources v7 (Stable)**' \
+'' \
+"**Version actuelle : $VERSION**" \
+'' \
+"[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)]($X86)" \
+"[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)]($ISO)" \
+"[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)]($IMG)" \
+"[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)]($VMDK)" \
+"[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)" \
+'' \
+'<!-- AUTO-RELEASE-END -->' \
+> /tmp/auto_block.txt
 
           awk '
             BEGIN {inblock=0}
-            /<!-- AUTO-RELEASE-START -->/ {inblock=1; system("cat /tmp/auto_release_block.txt"); next}
+            /<!-- AUTO-RELEASE-START -->/ {inblock=1; system("cat /tmp/auto_block.txt"); next}
             /<!-- AUTO-RELEASE-END -->/ {inblock=0; next}
             !inblock {print}
           ' README.md > README.new && mv README.new README.md
 
-      # 4️⃣ Commit + PUSH EXPLICITE vers main (FIN du problème)
       - name: Commit and push README
         run: |
           git config user.name "GitHub Actions Bot"
@@ -73,5 +69,5 @@ EOF
             exit 0
           fi
 
-          git commit -m "🚀 Auto-update README links to version ${{ steps.release.outputs.version }}"
+          git commit -m "Auto-update README for version ${{ steps.release.outputs.version }}"
           git push origin HEAD:main
