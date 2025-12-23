@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
 
       - name: Get release version
         id: release
@@ -24,24 +25,25 @@ jobs:
         env:
           VERSION: ${{ steps.release.outputs.version }}
         run: |
-          # 1. Définition locale et protection des balises
-          START_B=''
-          END_B=''
+          # 1. Définition des balises
+          START_B="<!-- AUTO-RELEASE-START -->"
+          END_B="<!-- AUTO-RELEASE-END -->"
           
-          # 2. Création du bloc de contenu (Vérifie bien les tirets dans les noms de fichiers)
-          cat <<EOF > /tmp/content.txt
-          ### 📂 **Tableau des Ressources (Stable)**
+          # 2. Création du bloc de contenu
+          cat <<'EOF' > /tmp/content.txt
+### 📂 **Tableau des Ressources (Stable)**
 
-          **Version actuelle : $VERSION**
+**Version actuelle : ${VERSION}**
 
-          [![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-.qcow2.zip)
-          EOF
+[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${VERSION}/all_packages-x86-${VERSION}.zip) &nbsp; 
+[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${VERSION}/mikrotik-${VERSION}.iso.zip) &nbsp; 
+[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${VERSION}/install-image-${VERSION}.img.zip) &nbsp; 
+[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${VERSION}/chr-${VERSION}-vmdk.zip) &nbsp; 
+[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${VERSION}/chr-${VERSION}.qcow2.zip)
+EOF
 
-          # 3. Nettoyage et Injection : On utilise des quotes pour protéger les variables
-          # On supprime tout entre START et END
+          # 3. Nettoyage et injection
           sed -i "/$START_B/,/$END_B/{//!d}" README.md
-          
-          # On injecte le nouveau contenu après START
           sed -i "/$START_B/r /tmp/content.txt" README.md
 
       - name: Commit and push
