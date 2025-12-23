@@ -10,39 +10,44 @@ permissions:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
 
       - name: Get release version
         id: release
-        run: |
-          VERSION="${GITHUB_REF#refs/tags/}"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
 
       - name: Update README
         env:
           VERSION: ${{ steps.release.outputs.version }}
         run: |
-          # 1. Définition des balises
-          START_B=""
-          END_B=""
+          # 1. Définition locale et protection des balises
+          START_B=''
+          END_B=''
           
-          # 2. Génération du contenu Markdown (On utilise printf pour éviter les soucis de EOF)
-          printf "### 📂 **Tableau des Ressources (Stable)**\n\n**Version actuelle : $VERSION**\n\n[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-.qcow2.zip)\n" > /tmp/content.txt
+          # 2. Création du bloc de contenu (Vérifie bien les tirets dans les noms de fichiers)
+          cat <<EOF > /tmp/content.txt
+          ### 📂 **Tableau des Ressources (Stable)**
 
-          # 3. Remplacement propre du bloc entre les balises
+          **Version actuelle : $VERSION**
+
+          [![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-.qcow2.zip)
+          EOF
+
+          # 3. Nettoyage et Injection : On utilise des quotes pour protéger les variables
+          # On supprime tout entre START et END
           sed -i "/$START_B/,/$END_B/{//!d}" README.md
+          
+          # On injecte le nouveau contenu après START
           sed -i "/$START_B/r /tmp/content.txt" README.md
 
-      - name: Commit and push changes
+      - name: Commit and push
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add README.md
-          # On commit seulement s'il y a des changements
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🚀 Auto-update README for version ${{ steps.release.outputs.version }}" && git push origin HEAD:main)
+          git commit -m "🚀 Auto-update README for version ${{ steps.release.outputs.version }}" || exit 0
+          git push origin main
