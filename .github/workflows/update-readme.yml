@@ -21,30 +21,21 @@ jobs:
         run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
 
       - name: Update README
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+          # On définit le contenu ici pour éviter les erreurs de syntaxe dans le script
+          TABLE_CONTENT: |
+            ### 📂 **Tableau des Ressources (Stable)**
+            **Version actuelle : ${{ steps.release.outputs.version }}**
+            [![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/all_packages-x86-${{ steps.release.outputs.version }}.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/mikrotik-${{ steps.release.outputs.version }}.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/install-image-${{ steps.release.outputs.version }}-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/chr-${{ steps.release.outputs.version }}-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/chr-${{ steps.release.outputs.version }}-.qcow2.zip)
         run: |
-          VERSION="${{ steps.release.outputs.version }}"
+          # 1. Sauvegarde du contenu dans un fichier temporaire
+          echo "$TABLE_CONTENT" > /tmp/content.txt
           
-          # 1. Préparation des liens
-          X86="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip"
-          ISO="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip"
-          IMG="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION-.img.zip"
-          VMDK="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip"
-          QCOW2="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-.qcow2.zip"
-
-          # 2. Création du contenu à injectER (SANS les balises)
-          cat <<EOF > /tmp/content.txt
-
-### 📂 **Tableau des Ressources v7 (Stable)**
-
-**Version actuelle : $VERSION**
-
-[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)]($X86) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)]($ISO) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)]($IMG) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)]($VMDK) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)
-EOF
-
-          # 3. NETTOYAGE : On supprime tout ce qu'il y a ENTRE les deux balises
+          # 2. NETTOYAGE : Supprime tout ce qu'il y a entre les balises (idempotent)
           sed -i '//,//{//!d}' README.md
           
-          # 4. INJECTION : On insère le contenu juste après la balise START
+          # 3. INJECTION : Insère le nouveau contenu
           sed -i '//r /tmp/content.txt' README.md
 
       - name: Commit and push
