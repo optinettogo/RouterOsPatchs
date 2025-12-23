@@ -25,13 +25,14 @@
 
 ### 📂 **Tableau des Ressources (Stable)**
 
-**Version actuelle : 7.19**
+**Version actuelle : 7.8**
 
-[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/all_packages-x86-7.19.zip) &nbsp; 
-[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/mikrotik-7.19.iso.zip) &nbsp; 
-[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/install-image-7.19-.img.zip) &nbsp; 
-[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/chr-7.19-vmdk.zip) &nbsp; 
-[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/chr-7.19-.qcow2.zip)
+[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.8/all_packages-x86-7.8.zip) &nbsp; 
+[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.8/mikrotik-7.8.iso.zip) &nbsp; 
+[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.8/install-image-7.8.img.zip) &nbsp; 
+[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.8/chr-7.8.vmdk.zip) &nbsp; 
+[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.8/chr-7.8.qcow2.zip)
+
 ---
 
 ### 🤝 **Rejoindre la Communauté d'Experts**
