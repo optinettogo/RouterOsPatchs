@@ -23,20 +23,25 @@ jobs:
       - name: Update README
         env:
           VERSION: ${{ steps.release.outputs.version }}
-          # On définit le contenu ici pour éviter les erreurs de syntaxe dans le script
+          START_B: ""
+          END_B: ""
           TABLE_CONTENT: |
+            
             ### 📂 **Tableau des Ressources (Stable)**
+            
             **Version actuelle : ${{ steps.release.outputs.version }}**
+            
             [![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/all_packages-x86-${{ steps.release.outputs.version }}.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/mikrotik-${{ steps.release.outputs.version }}.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/install-image-${{ steps.release.outputs.version }}-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/chr-${{ steps.release.outputs.version }}-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/chr-${{ steps.release.outputs.version }}-.qcow2.zip)
+            
         run: |
-          # 1. Sauvegarde du contenu dans un fichier temporaire
+          # 1. Sauvegarde du contenu
           echo "$TABLE_CONTENT" > /tmp/content.txt
           
-          # 2. NETTOYAGE : Supprime tout ce qu'il y a entre les balises (idempotent)
-          sed -i '//,//{//!d}' README.md
+          # 2. Nettoyage sécurisé avec variables
+          sed -i "/$START_B/,/$END_B/{//!d}" README.md
           
-          # 3. INJECTION : Insère le nouveau contenu
-          sed -i '//r /tmp/content.txt' README.md
+          # 3. Injection sécurisée
+          sed -i "/$START_B/r /tmp/content.txt" README.md
 
       - name: Commit and push
         run: |
