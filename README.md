@@ -5,9 +5,9 @@
 <br>
 <br>
 
-[![Patch 6.x](https://img.shields.io/badge/%EF%A3%BF_Patch_MikroTik_RouterOS_6.x-passing-success?style=plastic&logo=mikrotik)](https://github.com/optinettogo/RouterOsPatchs/releases)
-[![Patch 7.x](https://img.shields.io/badge/%EF%A3%BF_Patch_MikroTik_RouterOS_7.x-passing-success?style=plastic&logo=mikrotik)](https://github.com/optinettogo/RouterOsPatchs/releases/latest)
-[![Licence Contact](https://img.shields.io/badge/Contactez--moi--pour--la--licence-WhatsApp-brightgreen?style=plastic&logo=whatsapp)](https://wa.me/22890190164)
+[![Patch 6.x](https://img.shields.io/badge/Patch_MikroTik_RouterOS_6.x-passing-success?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases)
+[![Patch 7.x](https://img.shields.io/badge/Patch_MikroTik_RouterOS_7.x-passing-success?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/latest)
+[![Licence Contact](https://img.shields.io/badge/Contactez--moi--pour--la--licence-WhatsApp-brightgreen?style=plastic&logo=whatsapp&logoColor=white)](https://wa.me/22890190164)
 
 <br>
 
@@ -29,7 +29,7 @@
 
 <br>
 
-[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik)](https://github.com/optinettogo/RouterOsPatchs/releases/download/v7.19/all_packages-x86-7.19.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik)](https://github.com/optinettogo/RouterOsPatchs/releases/download/v7.19/vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3)](https://github.com/optinettogo/RouterOsPatchs/releases/download/v7.19/chr-7.19-.qcow2.zip)
+[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/all_packages-x86-7.19.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/mikrotik-7.19.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/install-image-7.19-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/chr-7.19-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/7.19/chr-7.19-.qcow2.zip)
 
 <br>
 <br>
