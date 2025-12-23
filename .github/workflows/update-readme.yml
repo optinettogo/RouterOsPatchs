@@ -12,18 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # 1️⃣ Checkout propre sur main (évite detached HEAD)
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
 
-      - name: Get latest release tag
+      # 2️⃣ Récupération de la version depuis le tag GitHub
+      - name: Get release version
         id: release
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
+          VERSION="${GITHUB_REF#refs/tags/}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Update README links
+      # 3️⃣ Mise à jour du bloc AUTO-RELEASE dans le README
+      - name: Update README download links
         run: |
-          VERSION=${{ steps.release.outputs.version }}
+          VERSION="${{ steps.release.outputs.version }}"
 
           X86="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip"
           ISO="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip"
@@ -42,10 +48,18 @@ jobs:
 [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)\n\n\
 <!-- AUTO-RELEASE-END -->" README.md
 
+      # 4️⃣ Commit & push sécurisé
       - name: Commit and push README
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
           git add README.md
-          git commit -m "Auto-update README for release ${{ steps.release.outputs.version }}"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "Aucune modification détectée."
+            exit 0
+          fi
+
+          git commit -m "🚀 Auto-update README links to version ${{ steps.release.outputs.version }}"
+          git push origin main
