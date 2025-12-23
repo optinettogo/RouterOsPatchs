@@ -28,32 +28,35 @@ jobs:
         run: |
           VERSION="${{ steps.release.outputs.version }}"
 
+          # Définition des URLs avec tes nomenclatures exactes
           X86="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip"
           ISO="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip"
-          IMG="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION.img.zip"
+          IMG="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION-.img.zip"
           VMDK="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip"
-          QCOW2="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION.qcow2.zip"
+          QCOW2="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-.qcow2.zip"
 
+          # Création du bloc de remplacement
           printf '%s\n' \
-'<!-- AUTO-RELEASE-START -->' \
+'' \
 '' \
 '### 📂 **Tableau des Ressources v7 (Stable)**' \
 '' \
 "**Version actuelle : $VERSION**" \
 '' \
 "[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)]($X86)" \
-"[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)]($ISO)" \
-"[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)]($IMG)" \
-"[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)]($VMDK)" \
-"[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)" \
+"&nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)]($ISO)" \
+"&nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)]($IMG)" \
+"&nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)]($VMDK)" \
+"&nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)" \
 '' \
-'<!-- AUTO-RELEASE-END -->' \
+'' \
 > /tmp/auto_block.txt
 
+          # Injection du bloc dans le README via AWK
           awk '
             BEGIN {inblock=0}
-            /<!-- AUTO-RELEASE-START -->/ {inblock=1; system("cat /tmp/auto_block.txt"); next}
-            /<!-- AUTO-RELEASE-END -->/ {inblock=0; next}
+            // {inblock=1; system("cat /tmp/auto_block.txt"); next}
+            // {inblock=0; next}
             !inblock {print}
           ' README.md > README.new && mv README.new README.md
 
@@ -61,13 +64,10 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-
           git add README.md
-
           if git diff --cached --quiet; then
             echo "Aucune modification détectée."
             exit 0
           fi
-
-          git commit -m "Auto-update README for version ${{ steps.release.outputs.version }}"
+          git commit -m "🚀 Auto-update README for version ${{ steps.release.outputs.version }}"
           git push origin HEAD:main
