@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Main Branch
         uses: actions/checkout@v4
         with:
-          ref: main # Force le bot à se mettre sur la branche main
+          ref: main # Force le bot à se positionner sur la branche principale
 
       - name: Get Latest Tag
         id: get_tag
@@ -24,11 +24,11 @@ jobs:
           NEW_TAG=${{ steps.get_tag.outputs.tag }}
           echo "Mise à jour vers la version : $NEW_TAG"
           
-          # 1. Remplace tout ce qui suit 'download/' jusqu'au prochain slash
-          sed -i "s|download/[^/]*|download/$NEW_TAG|g" README.md
+          # 1. Mise à jour des liens de téléchargement (download/X.XX)
+          sed -i "s|download/[0-9.]*|download/$NEW_TAG|g" README.md
           
-          # 2. Remplace les versions dans les noms de fichiers (ex: 7.19 -> 7.20)
-          # Cette regex est plus large pour attraper tes tirets complexes
+          # 2. Mise à jour des numéros de version dans le texte (7.19 -> 7.20)
+          # On cherche le format chiffre.chiffre
           sed -i "s|[0-9]\{1,2\}\.[0-9]\{1,2\}|$NEW_TAG|g" README.md
 
       - name: Commit and Push Changes
@@ -37,4 +37,4 @@ jobs:
           git config --global user.email "actions@github.com"
           git add README.md
           git commit -m "🚀 Auto-update README links to version ${{ steps.get_tag.outputs.tag }}"
-          git push origin main
+          git push origin main # On précise la destination pour éviter l'erreur 128
