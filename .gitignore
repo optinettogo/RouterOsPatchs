@@ -1,0 +1,6 @@
+__pycache__/
+.vscode/
+venv/
+app/
+loader/
+test_*.py
