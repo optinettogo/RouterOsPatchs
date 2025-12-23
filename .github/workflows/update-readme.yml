@@ -10,43 +10,60 @@ permissions:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
 
       - name: Get release version
         id: release
-        run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
-
-      - name: Update README
-        env:
-          VERSION: ${{ steps.release.outputs.version }}
-          START_B: ""
-          END_B: ""
-          TABLE_CONTENT: |
-            
-            ### 📂 **Tableau des Ressources (Stable)**
-            
-            **Version actuelle : ${{ steps.release.outputs.version }}**
-            
-            [![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/all_packages-x86-${{ steps.release.outputs.version }}.zip) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/mikrotik-${{ steps.release.outputs.version }}.iso.zip) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/install-image-${{ steps.release.outputs.version }}-.img.zip) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/chr-${{ steps.release.outputs.version }}-vmdk.zip) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/${{ steps.release.outputs.version }}/chr-${{ steps.release.outputs.version }}-.qcow2.zip)
-            
         run: |
-          # 1. Sauvegarde du contenu
-          echo "$TABLE_CONTENT" > /tmp/content.txt
-          
-          # 2. Nettoyage sécurisé avec variables
-          sed -i "/$START_B/,/$END_B/{//!d}" README.md
-          
-          # 3. Injection sécurisée
-          sed -i "/$START_B/r /tmp/content.txt" README.md
+          VERSION="${GITHUB_REF#refs/tags/}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Commit and push
+      - name: Set environment variables
+        run: echo "SETUP DONE"
+        env:
+          START_B: "<!-- AUTO-RELEASE-START -->"
+          END_B: "<!-- AUTO-RELEASE-END -->"
+
+      - name: Generate new README block
+        run: |
+          VERSION="${{ steps.release.outputs.version }}"
+          START_B="<!-- AUTO-RELEASE-START -->"
+          END_B="<!-- AUTO-RELEASE-END -->"
+
+          cat <<EOF > /tmp/content.txt
+### 📂 **Tableau des Ressources (Stable)**
+
+**Version actuelle : $VERSION**
+
+[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip) &nbsp; 
+[![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip) &nbsp; 
+[![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION-.img.zip) &nbsp; 
+[![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip) &nbsp; 
+[![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)](https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-.qcow2.zip)
+EOF
+
+      - name: Inject new block into README
+        run: |
+          START_B="<!-- AUTO-RELEASE-START -->"
+          END_B="<!-- AUTO-RELEASE-END -->"
+          awk -v start="$START_B" -v end="$END_B" '
+            {
+              if ($0 ~ start) {print; system("cat /tmp/content.txt"); inblock=1; next}
+              if ($0 ~ end) {inblock=0; print; next}
+              if (!inblock) print
+            }
+          ' README.md > README.tmp && mv README.tmp README.md
+
+      - name: Commit and push changes
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add README.md
-          git commit -m "🚀 Auto-update README for version ${{ steps.release.outputs.version }}" || exit 0
-          git push origin main
+          git commit -m "🚀 Auto-update README for version ${{ steps.release.outputs.version }}" || echo "No changes to commit"
+          git push origin HEAD:main
