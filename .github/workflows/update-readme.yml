@@ -28,31 +28,24 @@ jobs:
         run: |
           VERSION="${{ steps.release.outputs.version }}"
 
-          # Définition des URLs avec tes nomenclatures exactes
+          # Définition des URLs (Vérifie bien les tirets '-' dans tes noms de fichiers)
           X86="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/all_packages-x86-$VERSION.zip"
           ISO="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/mikrotik-$VERSION.iso.zip"
           IMG="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/install-image-$VERSION-.img.zip"
           VMDK="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-vmdk.zip"
           QCOW2="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION/chr-$VERSION-.qcow2.zip"
 
-          # Création du bloc de remplacement
-          printf '%s\n' \
-'' \
-'' \
-'### 📂 **Tableau des Ressources v7 (Stable)**' \
-'' \
-"**Version actuelle : $VERSION**" \
-'' \
-"[![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)]($X86)" \
-"&nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)]($ISO)" \
-"&nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)]($IMG)" \
-"&nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)]($VMDK)" \
-"&nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)" \
-'' \
-'' \
-> /tmp/auto_block.txt
+          # Génération du bloc propre sans erreur de syntaxe
+          cat <<EOF > /tmp/auto_block.txt
+          ### 📂 **Tableau des Ressources v7 (Stable)**
 
-          # Injection du bloc dans le README via AWK
+          **Version actuelle : $VERSION**
+
+          [![X86](https://img.shields.io/badge/Packages-X86-orange?style=plastic&logo=mikrotik&logoColor=white)]($X86) &nbsp; [![ISO](https://img.shields.io/badge/Image--ISO-red?style=plastic&logo=mikrotik&logoColor=white)]($ISO) &nbsp; [![IMG](https://img.shields.io/badge/Image--Disk-grey?style=plastic&logo=mikrotik&logoColor=white)]($IMG) &nbsp; [![VMware](https://img.shields.io/badge/(VMDK)-VMware-blueviolet?style=plastic&logo=mikrotik&logoColor=white)]($VMDK) &nbsp; [![GNS3](https://img.shields.io/badge/(QCOW2)-GNS3Lab-047AD0?style=plastic&logo=gns3&logoColor=white)]($QCOW2)
+
+          EOF
+
+          # Injection dans le README
           awk '
             BEGIN {inblock=0}
             // {inblock=1; system("cat /tmp/auto_block.txt"); next}
