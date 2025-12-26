@@ -134,7 +134,7 @@
         <!-- Page header section -->
         <header class="text-center mb-12 content-card" style="transition-delay: 100ms;">
             <!-- Main title with gradient text effect -->
-            <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400 dark:from-blue-400 dark:to-sky-300 mb-3">MikroTik RouterOS</h1>
+            <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400 dark:from-blue-400 dark:to-sky-300 mb-3">RouterOS Patched Version</h1>
             <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400">Patched Versions</p>
             
             <!-- Status badges for build workflows and services -->
@@ -376,22 +376,23 @@
                     loadingChangelog:"Loading changelog...",
                     changelogError:"Failed to load changelog. Please try again later.",
                 },
-                zh: {
-                    language: "语言",
-                    infoLabel1:`如果你已经在运行<b>Patch</b>过的RouterOS，可以通过WebFig或WinBox中的<b>QuickSet或System > Packages</b>菜单点击<b>"Check For Updates"</b>来升级到最新版本。`,
-                    infoLabel2:`有关<b>安装和升级</b>的更多信息，请参阅<a href="https://help.mikrotik.com/docs/" target="_blank" class="text-blue-500 dark:text-blue-400 hover:underline">文档</a><br>有关<b>Patch</b>的更多信息，请参阅<a href="https://github.com/optinettogo/RouterOsPatchs" target="_blank" class="text-blue-500 dark:text-blue-400 hover:underline">MikroTikPatch</a>`,
-                    installCmdLabel:"安装命令",
-                    proxyLabel:"启用GitHub代理加速",
-                    clearCache:"清除gh-proxy缓存",
-                    copyUrlsClearCache:"复制链接并打开缓存清除页面",
-                    loading:"正在加载最新版本...",
-                    quickInformation:"快速信息",
-                    settings:"设置",
-                    theme:"主题",
-                    changelog:"更新日志",
-                    loadingChangelog:"正在加载更新日志...",
-                    changelogError:"加载更新日志失败，请稍后重试。",
-                }
+                fr: {
+                    language: "Langue",
+                    infoLabel1: `Si vous utilisez déjà une version de RouterOS <b>patchée</b>, vous pouvez effectuer la mise à niveau vers la dernière version via <b>WebFig</b> ou <b>WinBox</b>, en cliquant sur <b>"Check For Updates"</b> dans le menu <b>QuickSet</b> ou <b>System > Packages</b>.`,
+                    infoLabel2: `Pour plus d’informations sur <b>l’installation et la mise à jour</b>, veuillez consulter la <a href="https://help.mikrotik.com/docs/" target="_blank" class="text-blue-500 dark:text-blue-400 hover:underline">documentation</a>.<br>Pour plus d’informations sur le <b>Patch</b>, veuillez consulter <a href="https://github.com/optinettogo/RouterOsPatchs" target="_blank" class="text-blue-500 dark:text-blue-400 hover:underline">MikroTikPatch</a>.`,
+                    installCmdLabel: "Commande d’installation",
+                    proxyLabel: "Activer le proxy GitHub pour accélérer les téléchargements",
+                    clearCache: "Vider le cache gh-proxy",
+                    copyUrlsClearCache: "Copier le lien et ouvrir la page de nettoyage du cache",
+                    loading: "Chargement de la dernière version...",
+                    quickInformation: "Informations rapides",
+                    settings: "Paramètres",
+                    theme: "Thème",
+                    changelog: "Journal des modifications",
+                    loadingChangelog: "Chargement du journal des modifications...",
+                    changelogError: "Échec du chargement du journal des modifications. Veuillez réessayer plus tard.",
+               }
+
             };
 
             // Function to set language and update all i18n elements
@@ -760,8 +761,6 @@
             versionBtnsContainer.innerHTML = `
                 <button data-version="${routeros7_stable}" class="px-3 py-1.5 text-sm font-medium rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition-all">v7 Stable</button>
                 <button data-version="${routeros7_testing}" class="px-3 py-1.5 text-sm font-medium rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition-all">v7 Testing</button>
-                <button data-version="${routeros6_longterm}" class="px-3 py-1.5 text-sm font-medium rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition-all">v6 Long-Term</button>
-                <button data-version="${routeros6_stable}" class="px-3 py-1.5 text-sm font-medium rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition-all">v6 Stable</button>
             `;
             
             // Update command display based on selected tool and version
