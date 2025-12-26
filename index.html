@@ -4,28 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MikroTik RouterOS Patched - Optinet Togo</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link id="webfont-css" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
     <style type="text/tailwindcss">
-        body {
-            font-family: 'Inter', sans-serif;
-            background-image: radial-gradient(circle at top, #dde3ee 0%, #f1f5f9 60%);
-        }
-        html.dark body {
-            background-image: radial-gradient(circle at top, #1e293b 0%, #0f172a 60%);
-        }
+        body { font-family: 'Inter', sans-serif; background-image: radial-gradient(circle at top, #dde3ee 0%, #f1f5f9 60%); }
+        html.dark body { background-image: radial-gradient(circle at top, #1e293b 0%, #0f172a 60%); }
         #command pre, #command code { font-family: 'Fira Code', monospace; }
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
         html.dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }
         #version-buttons button.active { @apply bg-blue-600 text-white shadow-md; }
-        .content-card { @apply transition-all duration-700; }
+        .content-card { @apply transition-all duration-700 border border-transparent hover:border-blue-500/30; }
         .loading .content-card { @apply opacity-0 translate-y-4; }
     </style>
     <script>
@@ -34,11 +25,10 @@
 </head>
 <body class="bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-slate-300 transition-colors duration-300 loading">
 
-    <a href="https://github.com/optinettogo/RouterOsPatchs" class="github-corner fixed top-0 right-0 z-50" target="_blank">
-        <svg width="80" height="80" viewBox="0 0 250 250" class="fill-slate-800 dark:fill-slate-50" style="position: absolute; top: 0; border: 0; right: 0;">
+    <a href="https://github.com/optinettogo/RouterOsPatchs" class="fixed top-0 right-0 z-50" target="_blank">
+        <svg width="80" height="80" viewBox="0 0 250 250" class="fill-slate-800 dark:fill-slate-50 text-white dark:text-gray-900">
             <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-            <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm text-slate-50 dark:text-gray-900"></path>
-            <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.6,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body text-slate-50 dark:text-gray-900"></path>
+            <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;"></path>
         </svg>
     </a>
 
@@ -50,87 +40,103 @@
 
         <main class="space-y-12">
             <div class="bg-white/60 dark:bg-gray-800/60 rounded-2xl shadow-lg p-6 md:p-8 backdrop-blur-xl content-card">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-semibold flex items-center"><span class="iconify mr-2 text-blue-500" data-icon="ph:gear-six-bold"></span> Paramètres</h2>
-                    <div class="flex items-center gap-4">
-                        <select id="lang-switcher" class="bg-slate-100 dark:bg-gray-700 rounded-md p-1.5 text-sm">
-                            <option value="en">English</option>
-                            <option value="fr" selected>Français</option>
-                        </select>
-                        <button id="theme-toggle-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-gray-700 transition-colors">
-                            <span class="iconify text-xl sun-icon hidden" data-icon="ph:sun-bold"></span>
-                            <span class="iconify text-xl moon-icon" data-icon="ph:moon-bold"></span>
-                        </button>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-lg font-semibold mb-4 flex items-center"><span class="iconify mr-2 text-blue-500" data-icon="ph:info-bold"></span> Informations</h2>
+                        <p class="text-sm">Si vous utilisez déjà une version <b>patchée</b>, la mise à jour se fait via "Check For Updates". Sinon, utilisez les images ISO ou CHR ci-dessous.</p>
+                    </div>
+                    <div class="space-y-4 border-t md:border-t-0 md:border-l border-slate-200 dark:border-gray-700 pt-6 md:pt-0 md:pl-8">
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium">Thème</span>
+                            <button id="theme-toggle-btn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-gray-700">
+                                <span class="iconify text-xl sun-icon hidden" data-icon="ph:sun-bold"></span>
+                                <span class="iconify text-xl moon-icon" data-icon="ph:moon-bold"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div id="download-rows" class="space-y-8 content-card">
-                <div class="loading-overlay fixed inset-0 bg-slate-100/80 dark:bg-gray-900/80 flex flex-col items-center justify-center z-50" id="loading">
+            <div class="bg-white/60 dark:bg-gray-800/60 rounded-2xl shadow-lg ring-1 ring-black/5 backdrop-blur-xl overflow-hidden content-card">
+                <div class="p-6 md:p-8">
+                    <h2 class="text-lg font-semibold mb-4 flex items-center"><span class="iconify mr-2 text-blue-500" data-icon="ph:terminal-window-bold"></span> Commande d'installation CHR</h2>
+                    <div id="version-buttons" class="flex flex-wrap gap-2 mb-4"></div>
+                    <div class="relative bg-slate-900 p-4 rounded-lg text-sm text-slate-300">
+                        <button id="copy-btn" class="absolute top-3 right-3 p-1.5 bg-slate-700 hover:bg-slate-600 rounded-md">
+                            <span class="iconify text-lg" data-icon="ph:copy-bold"></span>
+                        </button>
+                        <div id="command"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="download-rows" class="space-y-8">
+                <div class="flex flex-col items-center justify-center py-20" id="loading">
                     <span class="iconify text-4xl text-blue-600 animate-spin" data-icon="ph:spinner-gap-bold"></span>
-                    <span class="mt-4 text-lg font-medium">Récupération des versions Optinet...</span>
+                    <span class="mt-4 text-lg font-medium">Synchronisation Optinet Togo...</span>
                 </div>
             </div>
         </main>
-
-        <footer class="mt-16 pt-8 border-t border-slate-200 dark:border-gray-700/50 flex justify-center gap-4">
-            <a href="https://t.me/mikrotikpatch" class="flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-500 text-white shadow-md hover:scale-105 transition-all">
-                <span class="iconify" data-icon="ph:telegram-logo-bold"></span> Telegram
-            </a>
-            <a href="https://github.com/optinettogo/RouterOsPatchs" class="flex items-center gap-2 px-6 py-3 rounded-xl bg-gray-800 text-white shadow-md hover:scale-105 transition-all">
-                <span class="iconify" data-icon="ph:github-logo-bold"></span> GitHub Source
-            </a>
-        </footer>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const htmlEl = document.documentElement;
             const themeBtn = document.getElementById("theme-toggle-btn");
-
-            // Theme Toggle Logic
+            
             themeBtn.addEventListener("click", () => {
                 htmlEl.classList.toggle("dark");
                 themeBtn.querySelector('.sun-icon').classList.toggle('hidden');
                 themeBtn.querySelector('.moon-icon').classList.toggle('hidden');
             });
 
-            // Version Logic
             async function get_version() {
                 try {
-                    const res = await fetch(`https://upgrade.mikrotik.ltd/routeros/NEWESTa7.stable?ts=${Date.now()}`);
+                    const res = await fetch('https://upgrade.mikrotik.ltd/routeros/NEWESTa7.stable');
                     return res.ok ? (await res.text()).split(" ")[0] : "7.20.6";
                 } catch (e) { return "7.20.6"; }
             }
 
-            const version = await get_version();
+            const v = await get_version();
             document.getElementById("loading").style.display = "none";
             document.body.classList.remove('loading');
 
-            // Formatage des liens vers VOS ZIP (sans "patched")
-            const baseUrl = `https://github.com/optinettogo/RouterOsPatchs/releases/download/${version}/`;
+            // --- CONFIGURATION OPTINET TOGO ---
+            const baseUrl = `https://github.com/optinettogo/RouterOsPatchs/releases/download/${v}/`;
             
+            // On définit les fichiers selon VOTRE convention (.zip sans -patched)
             const downloads = [
-                { title: "Main Package (x86)", file: `routeros-${version}.npk.zip` },
-                { title: "ISO Image (x86)", file: `mikrotik-${version}.iso.zip` },
-                { title: "CHR Image (Disk)", file: `chr-${version}.img.zip` },
-                { title: "Extra Packages (x86)", file: `all_packages-x86-${version}.zip` }
+                { title: "RouterOS x86 ISO", file: `mikrotik-${v}.iso.zip`, icon: "ph:disc-bold" },
+                { title: "CHR Disk Image", file: `chr-${v}.img.zip`, icon: "ph:hard-drive-bold" },
+                { title: "Extra Packages x86", file: `all_packages-x86-${v}.zip`, icon: "ph:package-bold" },
+                { title: "NetInstall Patched", file: `netinstall-${v}.zip`, icon: "ph:desktop-bold" }
             ];
 
             const container = document.getElementById("download-rows");
             container.innerHTML = `
                 <div class="bg-white/60 dark:bg-gray-800/60 rounded-2xl shadow-lg p-6 backdrop-blur-xl">
-                    <h3 class="text-xl font-bold mb-6 text-blue-500">RouterOS v${version} Stable</h3>
+                    <h3 class="text-xl font-bold mb-6 text-blue-500">RouterOS v${v} Stable</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         ${downloads.map(d => `
-                            <a href="${baseUrl}${d.file}" target="_blank" class="p-4 bg-slate-100 dark:bg-gray-700 rounded-xl flex items-center justify-between hover:bg-blue-50 dark:hover:bg-gray-600 transition-all group border border-transparent hover:border-blue-500">
-                                <span class="font-medium">${d.title}</span>
-                                <span class="iconify text-2xl text-blue-500 group-hover:translate-y-1 transition-transform" data-icon="ph:file-zip-bold"></span>
+                            <a href="${baseUrl}${d.file}" target="_blank" class="p-4 bg-slate-100 dark:bg-gray-700 rounded-xl flex items-center justify-between hover:bg-blue-50 transition-all group">
+                                <div class="flex items-center gap-3">
+                                    <span class="iconify text-2xl text-blue-500" data-icon="${d.icon}"></span>
+                                    <span class="font-medium">${d.title}</span>
+                                </div>
+                                <span class="iconify text-xl" data-icon="ph:file-zip-bold"></span>
                             </a>
                         `).join("")}
                     </div>
                 </div>
             `;
+
+            // Terminal Command Logic
+            const cmdDiv = document.getElementById("command");
+            cmdDiv.innerHTML = `<code class="text-teal-400">VERSION=${v} bash <(curl https://mikrotik.ltd/chr.sh)</code>`;
+            
+            document.getElementById("copy-btn").addEventListener("click", () => {
+                navigator.clipboard.writeText(cmdDiv.innerText);
+            });
         });
     </script>
 </body>
