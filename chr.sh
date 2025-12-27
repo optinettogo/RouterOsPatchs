@@ -96,13 +96,12 @@ select_version() {
 }
 
 download_image(){
-    # Nettoyage de la version pour le nommage des fichiers
+    # Nettoyage de la version (on enlève le 'v' pour correspondre au lien manuel du Boss)
     VERSION_CLEAN=$(echo $VERSION | sed 's/^v//')
     
     case $ARCH in
         x86_64)
             if [[ $BOOT_MODE == "BIOS" ]]; then
-                # Correction Boss : Utilisation de install-image pour le BIOS
                 IMG_NAME="install-image-$VERSION_CLEAN.img.zip"
             else
                 IMG_NAME="chr-$VERSION_CLEAN.img.zip"
@@ -112,7 +111,8 @@ download_image(){
         *) echo "Arch non supportée"; exit 1 ;;
     esac
 
-    IMG_URL="https://patch.optinettogo.com/routeros/$VERSION/$IMG_NAME"
+    # FIX CRITIQUE : Utilisation de VERSION_CLEAN pour le dossier aussi !
+    IMG_URL="https://patch.optinettogo.com/routeros/$VERSION_CLEAN/$IMG_NAME"
     echo "$MSG_FILE_DOWNLOAD $IMG_URL"
     
     if ! http_get "$IMG_URL" "/tmp/chr.img.zip"; then
@@ -120,7 +120,6 @@ download_image(){
     fi
 
     unzip -qo /tmp/chr.img.zip -d /tmp
-    # Normalisation du fichier image extrait
     mv /tmp/*.img /tmp/chr.img
 }
 
@@ -153,5 +152,4 @@ write_and_reboot() {
     reboot -f
 }
 
-# --- Lancement du processus ---
 select_language; show_system_info; select_version; download_image; create_autorun; write_and_reboot
