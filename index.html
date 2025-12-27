@@ -152,7 +152,7 @@
                 </a>
 
                 <a href="https://github.com/optinettogo/RouterOsPatchs/tags" target="_blank">
-                  <img src="https://img.shields.io/badge/ACCESS_RELEASES-v7.20.6-047AD0?style=plastic&logo=mikrotik&logoColor=white" />
+                  <img src="https://img.shields.io/badge/ACCESS_RELEASES-Archive-047AD0?style=plastic&logo=mikrotik&logoColor=white" />
                 </a>
             </div>
             <!-- GitHub social buttons -->
@@ -490,16 +490,16 @@
                     title:"RouterOS v7",
                     versions:[ { title:"Stable", version:routeros7_stable } ],
                     groups: [
-                        { title:"X86", arch:"x86", downloads:[ { title:"Main package", type:"main" }, { title:"Extra packages", type:"extra" }, { title:"CD Image", type:"iso" }, { title:"Install image", type:"install" } ] },
-                        { title:"GENERAL", arch:"general", downloads:[ { title:"Netinstall (Windows)", type:"netinstall_windows" }, { title:"Netinstall (CLI Linux)", type:"netinstall_linux_cli" }, { title:"Changelog", type:"changlog" } ] }
+                        { title:"X86", arch:"x86", downloads:[ { title:"RouterOs npk", type:"main" }, { title:"All packages", type:"extra" }, { title:"ISO Image", type:"iso" }, { title:"Install image", type:"install" } ] },
+                        { title:"GENERAL", arch:"general", downloads:[ { title:"Netinstall (Windows)", type:"netinstall_windows" } ] }
                     ]
                 },
                 
                 {
                     title:"Cloud Hosted Router",
-                    versions:[ { title:"Stable", version:routeros7_stable }, { title:"Testing", version:routeros7_testing } ],
+                    versions:[ { title:"Stable", version:routeros7_stable } ],
                     groups:[
-                        { title:"X86", arch:"x86", downloads:[ { title:"Main package", type:"main" }, { title:"Extra packages", type:"extra" }, { title:"VHDX image", type:"vhdx" }, { title:"VMDK image", type:"vmdk" }, { title:"VDI image", type:"vdi" }, { title:"VirtualPC image", type:"vhd" }, { title:"Raw disk image", type:"img" }, { title:"OVA template", type:"ova" } ] },
+                        { title:"X86", arch:"x86", downloads:[ { title:"RouterOs npk", type:"main" }, { title:"All packages", type:"extra" }, { title:"Raw disk image", type:"img" } ] },
                     ]
                 },
             ];
@@ -757,7 +757,6 @@
             // Generate version selection buttons
             versionBtnsContainer.innerHTML = `
                 <button data-version="${routeros7_stable}" class="px-3 py-1.5 text-sm font-medium rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition-all">v7 Stable</button>
-                <button data-version="${routeros7_testing}" class="px-3 py-1.5 text-sm font-medium rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition-all">v7 Testing</button>
             `;
             
             // Update command display based on selected tool and version
