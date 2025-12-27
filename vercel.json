@@ -9,8 +9,8 @@
   ],
   "redirects": [
     {
-      "source": "/routeros/routeros-:version.npk",
-      "destination": "https://github.com/optinettogo/RouterOsPatchs/releases/download/:version/routeros-:version.npk",
+      "source": "/routeros/:version/:file",
+      "destination": "https://github.com/optinettogo/RouterOsPatchs/releases/download/:version/:file",
       "permanent": false
     }
   ]
