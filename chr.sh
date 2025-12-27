@@ -21,6 +21,7 @@ _ask() {
 	esac
 	return $_redo
 }
+
 ask() {
 	local _question="$1" _default="$2"
 	while :; do
@@ -29,6 +30,7 @@ ask() {
 		_ask && : ${resp:=$_default} && break
 	done
 }
+
 ask_until() { resp=; while [ -z "$resp" ] ; do ask "$1" "$2"; done; }
 yesno() { case $1 in [Yy]) return 0;; esac; return 1; }
 ask_yesno() { while true; do ask "$1" "$2"; case "$resp" in Y|y|N|n) break;; esac; done; yesno "$resp"; }
@@ -79,7 +81,6 @@ http_get() {
 }
 
 select_version() {
-    # --- MODIFICATION BOSS : Source de vérité Optinet Togo ---
     while true; do
         echo "$MSG_SELECT_VERSION"
         echo "1. $MSG_STABLE"
@@ -95,21 +96,32 @@ select_version() {
 }
 
 download_image(){
-    # --- MODIFICATION BOSS : Téléchargement depuis votre domaine ---
+    # Nettoyage de la version pour le nommage des fichiers
+    VERSION_CLEAN=$(echo $VERSION | sed 's/^v//')
+    
     case $ARCH in
         x86_64)
             if [[ $BOOT_MODE == "BIOS" ]]; then
-                IMG_URL="https://patch.optinettogo.com/routeros/$VERSION/chr-$VERSION-legacy-bios.img.zip"
+                # Correction Boss : Utilisation de install-image pour le BIOS
+                IMG_NAME="install-image-$VERSION_CLEAN.img.zip"
             else
-                IMG_URL="https://patch.optinettogo.com/routeros/$VERSION/chr-$VERSION.img.zip"
+                IMG_NAME="chr-$VERSION_CLEAN.img.zip"
             fi ;;
         aarch64)
-            IMG_URL="https://patch.optinettogo.com/routeros/$VERSION/chr-$VERSION-arm64.img.zip" ;;
+            IMG_NAME="chr-$VERSION_CLEAN-arm64.img.zip" ;;
         *) echo "Arch non supportée"; exit 1 ;;
     esac
+
+    IMG_URL="https://patch.optinettogo.com/routeros/$VERSION/$IMG_NAME"
     echo "$MSG_FILE_DOWNLOAD $IMG_URL"
-    http_get "$IMG_URL" "/tmp/chr.img.zip"
-    unzip -qo /tmp/chr.img.zip -d /tmp && mv /tmp/*.img /tmp/chr.img
+    
+    if ! http_get "$IMG_URL" "/tmp/chr.img.zip"; then
+        echo "$MSG_DOWNLOAD_FAILED"; exit 1
+    fi
+
+    unzip -qo /tmp/chr.img.zip -d /tmp
+    # Normalisation du fichier image extrait
+    mv /tmp/*.img /tmp/chr.img
 }
 
 create_autorun() {
@@ -141,4 +153,5 @@ write_and_reboot() {
     reboot -f
 }
 
+# --- Lancement du processus ---
 select_language; show_system_info; select_version; download_image; create_autorun; write_and_reboot
