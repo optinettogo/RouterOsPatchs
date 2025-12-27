@@ -488,9 +488,8 @@
             const downloads =[
                 {
                     title:"RouterOS v7",
-                    versions:[ { title:"Stable", version:routeros7_stable }, { title:"Testing", version:routeros7_testing } ],
+                    versions:[ { title:"Stable", version:routeros7_stable } ],
                     groups: [
-                        { title:"ARM64 / AMPERE", arch:"arm64", downloads:[ { title:"Main package", type:"main" }, { title:"Extra packages", type:"extra" }, { title:"ISO image for AMPERE", type:"iso" } ] },
                         { title:"X86", arch:"x86", downloads:[ { title:"Main package", type:"main" }, { title:"Extra packages", type:"extra" }, { title:"CD Image", type:"iso" }, { title:"Install image", type:"install" } ] },
                         { title:"GENERAL", arch:"general", downloads:[ { title:"Netinstall (Windows)", type:"netinstall_windows" }, { title:"Netinstall (CLI Linux)", type:"netinstall_linux_cli" }, { title:"Changelog", type:"changlog" } ] }
                     ]
@@ -501,7 +500,6 @@
                     versions:[ { title:"Stable", version:routeros7_stable }, { title:"Testing", version:routeros7_testing } ],
                     groups:[
                         { title:"X86", arch:"x86", downloads:[ { title:"Main package", type:"main" }, { title:"Extra packages", type:"extra" }, { title:"VHDX image", type:"vhdx" }, { title:"VMDK image", type:"vmdk" }, { title:"VDI image", type:"vdi" }, { title:"VirtualPC image", type:"vhd" }, { title:"Raw disk image", type:"img" }, { title:"OVA template", type:"ova" } ] },
-                        { title:"ARM64 / AMPERE", arch:"arm64", downloads:[ { title:"Main package", type:"main" }, { title:"Extra packages", type:"extra" }, { title:"VHDX image", type:"vhdx" }, { title:"VMDK image", type:"vmdk" }, { title:"VDI image", type:"vdi" }, { title:"VirtualPC image", type:"vhd" }, { title:"Raw disk image", type:"img" } ] }
                     ]
                 },
             ];
@@ -532,7 +530,6 @@
                 }
                 // Netinstall packages
                 if (type === "netinstall_windows") files.push(`netinstall-${version}.zip`);
-                if (type === "netinstall_linux_cli") files.push(`netinstall-${version}.tar.gz`);
                 return files;
             };
 
