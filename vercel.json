@@ -1,4 +1,12 @@
 {
+  "headers": [
+    {
+      "source": "/routeros/NEWESTa7.stable",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/routeros/routeros-:version.npk",
