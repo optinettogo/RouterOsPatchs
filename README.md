@@ -26,7 +26,7 @@
 
 <br>
 
-**📂 Resource Table (Stable Edition)**
+**📂 Resource Table (Long Term Edition)**
 
 **Current Version: 7.20.7**
 
