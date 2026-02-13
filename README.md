@@ -38,9 +38,6 @@
 
 ---
 
-**🤝 Join the Expert Community**
-
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Join_the_group-25D366?style=plastic&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/J0eGbdP2qKoFqZoMBfxjt5)
 
 <br>
 <br>
