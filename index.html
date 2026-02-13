@@ -489,7 +489,7 @@
                     title:"Cloud Hosted Router",
                     versions:[ { title:"Stable", version:routeros7_stable } ],
                     groups:[
-                        { title:"X86", arch:"x86", downloads:[ { title:"RouterOs npk", type:"main" }, { title:"All packages", type:"extra" }, { title:"Raw disk image", type:"img" } ] },
+                        { title:"CHR", arch:"x86", downloads:[ { title:"Cloud Hosted Router", type:"chr_zip" } ] },
                     ]
                 },
 
@@ -497,24 +497,28 @@
                     title: "Virtual & GNS3 & LABS",
                     versions:[ { title:"Stable", version:routeros7_stable } ],
                     groups:[
-                        { 
-                            title: "vmDiskImages", 
-                            arch: "x86", 
-                            downloads:[ 
+                        {
+                            title: "vmDiskImages",
+                            arch: "x86",
+                            downloads:[
                                 { title:"QCOW2 (KVM/GNS3)", type:"chr_qcow2" },
-                                { title:"VHDX (Hyper-V)", type:"chr_vhdx" }, 
-                                { title:"VMDK (VMware)", type:"chr_vmdk" }
-                            ] 
+                                { title:"VDI (VirtualBox)", type:"chr_vdi" },
+                                { title:"VHDX (Hyper-V)", type:"chr_vhdx" },
+                                { title:"VMDK (VMware)", type:"chr_vmdk" },
+                                { title:"VPC (Virtual PC)", type:"chr_vpc" }
+                            ]
                         },
-                        { 
-                            title: "vmInstallImages", 
-                            arch: "x86", 
-                            downloads:[ 
+                        {
+                            title: "vmInstallImages",
+                            arch: "x86",
+                            downloads:[
                                 { title:"RAW Image (IMG)", type:"inst_img" },
                                 { title:"QCOW2 Image", type:"inst_qcow2" },
+                                { title:"VDI Image", type:"inst_vdi" },
                                 { title:"VHDX Image", type:"inst_vhdx" },
-                                { title:"VMDK Image", type:"inst_vmdk" }
-                            ] 
+                                { title:"VMDK Image", type:"inst_vmdk" },
+                                { title:"VPC Image", type:"inst_vpc" }
+                            ]
                         }
                     ]
                 }
@@ -534,16 +538,23 @@
                 if (type === "extra") files.push(`all_packages-${arch}-${v}.zip`);
                 if (type === "install") files.push(`install-image-${v}.zip`);
 
-                // Virtual machine images (User specific request)
-                if (type === "chr_qcow2") files.push(`chr-${v}.qcow2.zip`);
-                if (type === "chr_vhdx") files.push(`chr-${v}.vhdx.zip`);
-                if (type === "chr_vmdk") files.push(`chr-${v}.vmdk.zip`);
+                // Cloud Hosted Router (single zip)
+                if (type === "chr_zip") files.push(`chr-${v}.zip`);
 
-                // Install disk images (User specific request)
-                if (type === "inst_img") files.push(`install-image-${v}.img.zip`);
+                // CHR Disk Images (all formats)
+                if (type === "chr_qcow2") files.push(`chr-${v}.qcow2.zip`);
+                if (type === "chr_vdi")   files.push(`chr-${v}.vdi.zip`);
+                if (type === "chr_vhdx")  files.push(`chr-${v}.vhdx.zip`);
+                if (type === "chr_vmdk")  files.push(`chr-${v}.vmdk.zip`);
+                if (type === "chr_vpc")   files.push(`chr-${v}.vpc.zip`);
+
+                // Install Disk Images (all formats)
+                if (type === "inst_img")   files.push(`install-image-${v}.img.zip`);
                 if (type === "inst_qcow2") files.push(`install-image-${v}.qcow2.zip`);
-                if (type === "inst_vhdx") files.push(`install-image-${v}.vhdx.zip`);
-                if (type === "inst_vmdk") files.push(`install-image-${v}.vmdk.zip`);
+                if (type === "inst_vdi")   files.push(`install-image-${v}.vdi.zip`);
+                if (type === "inst_vhdx")  files.push(`install-image-${v}.vhdx.zip`);
+                if (type === "inst_vmdk")  files.push(`install-image-${v}.vmdk.zip`);
+                if (type === "inst_vpc")   files.push(`install-image-${v}.vpc.zip`);
 
                 // Backward compatibility for legacy types
                 if (type === "img" && arch === "x86") files.push(`chr-${v}.img.zip`);
