@@ -536,10 +536,10 @@
                 if (type === "main" && v.charAt(0) === "7") files.push(`routeros-${v}${arch === "x86" ? "" : "-" + arch}.npk`);
                 if (type === "iso") files.push(`mikrotik-${v}${arch === "x86" ? "" : "-" + arch}.iso`);
                 if (type === "extra") files.push(`all_packages-${arch}-${v}.zip`);
-                if (type === "install") files.push(`install-image-${v}.zip`);
+                if (type === "install") files.push(`install-image-${v}.img.zip`);
 
                 // Cloud Hosted Router (single zip)
-                if (type === "chr_zip") files.push(`chr-${v}.zip`);
+                if (type === "chr_zip") files.push(`chr-${v}.img.zip`);
 
                 // CHR Disk Images (all formats)
                 if (type === "chr_qcow2") files.push(`chr-${v}.qcow2.zip`);
