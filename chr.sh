@@ -87,8 +87,8 @@ select_version() {
         echo "2. $MSG_TEST"
         read -p "$MSG_PLEASE_CHOOSE " version_choice
         case $version_choice in
-            1) VERSION=$(http_get "https://patch.optinettogo.com/routeros/NEWESTa7.stable" | cut -d' ' -f1); V7=1 ;;
-            2) VERSION=$(http_get "https://patch.optinettogo.com/routeros/NEWESTa7.testing" | cut -d' ' -f1); V7=1 ;;
+            1) VERSION=$(http_get "https://raw.githubusercontent.com/optinettogo/RouterOsPatchs/main/routeros/NEWESTa7.stable" | cut -d' ' -f1); V7=1 ;;
+            2) VERSION=$(http_get "https://raw.githubusercontent.com/optinettogo/RouterOsPatchs/main/routeros/NEWESTa7.testing" | cut -d' ' -f1); V7=1 ;;
             *) echo "Option invalide !"; continue ;;
         esac
         echo "$MSG_SELECTED_VERSION $VERSION"; break
@@ -112,7 +112,7 @@ download_image(){
     esac
 
     # FIX CRITIQUE : Utilisation de VERSION_CLEAN pour le dossier aussi !
-    IMG_URL="https://patch.optinettogo.com/routeros/$VERSION_CLEAN/$IMG_NAME"
+    IMG_URL="https://github.com/optinettogo/RouterOsPatchs/releases/download/$VERSION_CLEAN/$IMG_NAME"
     echo "$MSG_FILE_DOWNLOAD $IMG_URL"
     
     if ! http_get "$IMG_URL" "/tmp/chr.img.zip"; then
