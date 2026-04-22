@@ -99,13 +99,13 @@ download_image(){
     # Nettoyage de la version (on enlève le 'v' pour correspondre au lien manuel du Boss)
     VERSION_CLEAN=$(echo $VERSION | sed 's/^v//')
     
-    case $ARCH in
-        x86_64)
-            if [[ $BOOT_MODE == "BIOS" ]]; then
-                IMG_NAME="install-image-$VERSION_CLEAN.img.zip"
-            else
-                IMG_NAME="chr-$VERSION_CLEAN.img.zip"
-            fi ;;
+ case $ARCH in
+    x86_64)
+        if [[ $BOOT_MODE == "UEFI" ]]; then
+            IMG_NAME="install-image-$VERSION_CLEAN.img.zip"
+        else
+            IMG_NAME="chr-$VERSION_CLEAN.img.zip"
+        fi ;;
         aarch64)
             IMG_NAME="chr-$VERSION_CLEAN-arm64.img.zip" ;;
         *) echo "Arch non supportée"; exit 1 ;;
